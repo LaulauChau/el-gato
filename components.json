@@ -10,7 +10,9 @@
   "iconLibrary": "tabler",
   "menuAccent": "subtle",
   "menuColor": "default",
-  "registries": {},
+  "registries": {
+    "@ai-elements": "https://ai-sdk.dev/elements/api/registry/{name}.json"
+  },
   "rsc": true,
   "rtl": false,
   "style": "base-lyra",
