@@ -13,12 +13,12 @@
     "builtin": true
   },
   "globals": {},
-  "ignorePatterns": [".next/", "node-modules/", "next-env.d.ts"],
+  "ignorePatterns": [".next/", "migrations/", "node-modules/", "next-env.d.ts"],
   "plugins": ["import", "nextjs", "oxc", "react", "typescript", "unicorn"],
   "rules": {
     "import/no-cycle": "warn",
     "import/no-self-import": "warn",
-    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css", "**/*.scss"] }],
+    "import/no-unassigned-import": "off",
     "nextjs/no-duplicate-head": "error",
     "nextjs/no-html-link-for-pages": "error",
     "nextjs/no-img-element": "warn",

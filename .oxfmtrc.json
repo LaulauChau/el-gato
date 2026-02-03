@@ -17,5 +17,5 @@
     "preserveWhitespace": true,
     "stylesheet": "./src/app/globals.css"
   },
-  "ignorePatterns": []
+  "ignorePatterns": ["migrations/"]
 }
