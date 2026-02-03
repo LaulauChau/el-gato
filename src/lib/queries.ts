@@ -5,6 +5,7 @@ import { cache } from "react";
 import { treeifyError, z } from "zod";
 
 import { getChatById as getChatByIdDb, getChats as getChatsDb } from "./repositories/chat";
+import { getMessagesByChatId as getMessagesByChatIdDb } from "./repositories/message";
 import { err, ok } from "./utils";
 
 export const getChats = cache(async () => {
@@ -37,4 +38,23 @@ export const getChatById = cache(async (input: { id: string }) => {
   }
 
   return ok(chat);
+});
+
+const getChatMessagesSchema = z.object({ chatId: z.uuid() });
+
+export const getChatMessages = cache(async (input: { chatId: string }) => {
+  "use cache";
+
+  const result = getChatMessagesSchema.safeParse(input);
+
+  if (!result.success) {
+    return err(treeifyError(result.error));
+  }
+
+  const messages = await getMessagesByChatIdDb(result.data.chatId);
+
+  cacheTag(`chat-messages-${result.data.chatId}`);
+  cacheLife("hours");
+
+  return ok(messages);
 });

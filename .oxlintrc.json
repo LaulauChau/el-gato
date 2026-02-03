@@ -13,7 +13,14 @@
     "builtin": true
   },
   "globals": {},
-  "ignorePatterns": [".next/", "migrations/", "node-modules/", "next-env.d.ts"],
+  "ignorePatterns": [
+    ".next/",
+    "migrations/",
+    "node-modules/",
+    "next-env.d.ts",
+    "src/components/ai-elements/",
+    "src/components/ui/"
+  ],
   "plugins": ["import", "nextjs", "oxc", "react", "typescript", "unicorn"],
   "rules": {
     "import/no-cycle": "warn",

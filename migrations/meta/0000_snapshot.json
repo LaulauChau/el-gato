@@ -1,5 +1,5 @@
 {
-  "id": "9511065d-15ac-48af-9d2b-74e8ea730a05",
+  "id": "d29d091c-6612-49f3-a8ee-4fe4b633e46c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -101,8 +101,8 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},

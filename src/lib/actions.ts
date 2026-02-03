@@ -24,6 +24,7 @@ export async function createNewChat(formData: FormData) {
 
   const { chat: newChat } = await createChat(result.data.messageContent);
 
+  revalidateTag("chat", "max");
   redirect(`/chat/${newChat.id}`);
 }
 
@@ -44,6 +45,7 @@ export async function createNewMessage(formData: FormData) {
 
   await createMessage(result.data.chatId, result.data.messageContent, "user");
 
+  revalidateTag(`chat-messages-${result.data.chatId}`, "max");
   revalidatePath(`/chat/${result.data.chatId}`);
 }
 

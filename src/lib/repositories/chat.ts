@@ -4,20 +4,18 @@ import { db } from "@/lib/db";
 import { chat, message } from "@/lib/db/schemas";
 
 export async function createChat(input: string) {
-  return db.transaction(async (tx) => {
-    const [newChat] = await tx
-      .insert(chat)
-      .values({ title: input.slice(0, 50) })
-      .returning();
+  const [newChat] = await db
+    .insert(chat)
+    .values({ title: input.slice(0, 50) })
+    .returning();
 
-    if (!newChat) {
-      throw new Error("Error creating new chat");
-    }
+  if (!newChat) {
+    throw new Error("Error creating new chat");
+  }
 
-    await tx.insert(message).values({ chatId: newChat.id, content: input, role: "user" });
+  await db.insert(message).values({ chatId: newChat.id, content: input, role: "user" });
 
-    return { chat: newChat };
-  });
+  return { chat: newChat };
 }
 
 export async function getChatById(id: string) {

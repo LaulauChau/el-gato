@@ -25,7 +25,7 @@ export const message = pgTable("message", {
   role: messageRole("role").notNull(),
   chatId: uuid("chat_id")
     .notNull()
-    .references(() => chat.id),
+    .references(() => chat.id, { onDelete: "cascade", onUpdate: "cascade" }),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
     .notNull()
