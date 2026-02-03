@@ -1,0 +1,10 @@
+pre-commit:
+  jobs:
+    - name: Format
+      run: bun oxfmt --check --no-error-on-unmatched-pattern {staged_files}
+
+    - name: Lint & Type check
+      run: bun oxlint --deny-warnings --report-unused-disable-directives --type-aware --type-check {staged_files}
+      glob: "*.{js,ts,tsx}"
+
+  parallel: true

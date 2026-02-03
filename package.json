@@ -2,28 +2,44 @@
   "name": "el-gato",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "biome check",
-    "format": "biome format --write"
+    "build": "bun --bun next build",
+    "dev": "bun --bun next dev",
+    "format": "oxfmt --no-error-on-unmatched-pattern",
+    "lint": "oxlint --fix --deny-warnings --report-unused-disable-directives --type-aware",
+    "prepare": "if [ -d .git ]; then lefthook install; fi",
+    "start": "bun --bun next start",
+    "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "@base-ui/react": "^1.1.0",
+    "@tabler/icons-react": "^3.36.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "shadcn": "^3.8.2",
+    "tailwind-merge": "^3.4.0",
+    "tw-animate-css": "^1.4.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.0",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "babel-plugin-react-compiler": "1.0.0",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/bun": "^1.3.8",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
+    "@typescript/native-preview": "^7.0.0-dev.20260203.1",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "lefthook": "^2.1.0",
+    "oxfmt": "^0.28.0",
+    "oxlint": "^1.43.0",
+    "oxlint-tsgolint": "^0.11.4",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
   },
+  "packageManager": "bun@1.3.8",
   "ignoreScripts": [
     "sharp",
     "unrs-resolver"

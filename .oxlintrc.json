@@ -1,0 +1,45 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error",
+    "nursery": "off",
+    "pedantic": "off",
+    "perf": "warn",
+    "restriction": "off",
+    "style": "off",
+    "suspicious": "warn"
+  },
+  "env": {
+    "builtin": true
+  },
+  "globals": {},
+  "ignorePatterns": [".next/", "node-modules/", "next-env.d.ts"],
+  "plugins": ["import", "nextjs", "oxc", "react", "typescript", "unicorn"],
+  "rules": {
+    "import/no-cycle": "warn",
+    "import/no-self-import": "warn",
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css", "**/*.scss"] }],
+    "nextjs/no-duplicate-head": "error",
+    "nextjs/no-html-link-for-pages": "error",
+    "nextjs/no-img-element": "warn",
+    "react/checked-requires-onchange-or-readonly": "warn",
+    "react/no-unsafe": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/rules-of-hooks": "error",
+    "typescript/consistent-type-imports": "warn",
+    "typescript/no-floating-promises": "error",
+    "typescript/no-misused-promises": "error",
+    "typescript/no-unsafe-assignment": "warn",
+    "typescript/no-unsafe-call": "warn",
+    "typescript/no-unsafe-member-access": "warn",
+    "typescript/prefer-nullish-coalescing": "warn",
+    "typescript/prefer-optional-chain": "warn",
+    "typescript/require-await": "warn",
+    "typescript/unbound-method": "warn"
+  },
+  "settings": {
+    "next": {
+      "rootDir": "src/app"
+    }
+  }
+}
