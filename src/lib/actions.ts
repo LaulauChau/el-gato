@@ -47,6 +47,8 @@ export async function createNewMessage(formData: FormData) {
 
   revalidateTag(`chat-messages-${result.data.chatId}`, "max");
   revalidatePath(`/chat/${result.data.chatId}`);
+
+  return { chatId: result.data.chatId, messageContent: result.data.messageContent };
 }
 
 const deleteChatSchema = z.object({

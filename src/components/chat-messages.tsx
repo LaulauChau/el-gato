@@ -16,25 +16,46 @@ type MessageData = {
 
 type Props = {
   messages: MessageData[];
+  streamingMessage?: MessageData | null;
 };
 
-export function ChatMessages({ messages }: Props) {
-  return (
-    <Conversation className="relative min-h-0 flex-1">
-      <ConversationContent>
-        {messages.length === 0 ? (
+function combineMessages(
+  messages: MessageData[],
+  streamingMessage?: MessageData | null,
+): MessageData[] {
+  if (!streamingMessage) {
+    return messages;
+  }
+
+  return [...messages, streamingMessage];
+}
+
+export function ChatMessages({ messages, streamingMessage }: Props) {
+  const allMessages = combineMessages(messages, streamingMessage);
+
+  if (allMessages.length === 0) {
+    return (
+      <Conversation className="relative min-h-0 flex-1">
+        <ConversationContent>
           <ConversationEmptyState
             description="Start the conversation by typing a message."
             icon={<IconMessage className="size-6" />}
             title="No messages yet"
           />
-        ) : (
-          messages.map((msg) => (
-            <Message from={msg.role} key={msg.id}>
-              <MessageContent>{msg.content}</MessageContent>
-            </Message>
-          ))
-        )}
+        </ConversationContent>
+        <ConversationScrollButton />
+      </Conversation>
+    );
+  }
+
+  return (
+    <Conversation className="relative min-h-0 flex-1">
+      <ConversationContent>
+        {allMessages.map((message) => (
+          <Message from={message.role} key={message.id}>
+            <MessageContent>{message.content}</MessageContent>
+          </Message>
+        ))}
       </ConversationContent>
       <ConversationScrollButton />
     </Conversation>

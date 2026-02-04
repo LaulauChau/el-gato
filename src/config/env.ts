@@ -8,7 +8,14 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.url(),
+    QSTASH_CURRENT_SIGNING_KEY: z.string(),
+    QSTASH_NEXT_SIGNING_KEY: z.string(),
+    QSTASH_TOKEN: z.string(),
+    QSTASH_URL: z.url(),
+    MISTRAL_API_KEY: z.string(),
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+    UPSTASH_REDIS_REST_URL: z.url(),
+    UPSTASH_REDIS_REST_TOKEN: z.string(),
   },
 
   /**

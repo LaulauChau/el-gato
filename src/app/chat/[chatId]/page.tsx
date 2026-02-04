@@ -1,40 +1,42 @@
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-import { ChatInput } from "@/components/chat-input";
-import { ChatMessages } from "@/components/chat-messages";
-import { createNewMessage } from "@/lib/actions";
 import { getChatById, getChatMessages } from "@/lib/queries";
 
-async function ChatContent({ chatId }: { chatId: string }) {
-  const [chat, messagesResult] = await Promise.all([
+import { ChatClient } from "./chat-client";
+
+type PageParams = {
+  chatId: string;
+};
+
+async function ChatContent({ params }: { params: Promise<PageParams> }) {
+  const { chatId } = await params;
+
+  const [chatResult, messagesResult] = await Promise.all([
     getChatById({ id: chatId }),
     getChatMessages({ chatId }),
   ]);
 
-  if (!chat.success || !chat.data) {
+  if (!chatResult.success || !chatResult.data) {
     redirect("/");
   }
 
   const messages = messagesResult.success ? messagesResult.data : [];
 
-  return (
-    <div className="flex h-full w-full max-w-2xl flex-col overflow-hidden">
-      <ChatMessages messages={messages} />
-      <div className="shrink-0 pb-4">
-        <ChatInput action={createNewMessage} chatId={chatId} placeholder="Send a message..." />
-      </div>
-    </div>
-  );
+  const formattedMessages = messages.map((message) => ({
+    id: message.id,
+    content: message.content,
+    role: message.role,
+  }));
+
+  return <ChatClient chatId={chatId} messages={formattedMessages} />;
 }
 
-export default async function ChatPage({ params }: { params: Promise<{ chatId: string }> }) {
-  const { chatId } = await params;
-
+export default function ChatPage({ params }: { params: Promise<PageParams> }) {
   return (
     <main className="flex min-h-0 flex-1 justify-center overflow-hidden">
       <Suspense>
-        <ChatContent chatId={chatId} />
+        <ChatContent params={params} />
       </Suspense>
     </main>
   );

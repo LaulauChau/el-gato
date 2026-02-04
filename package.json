@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",
+    "@mistralai/mistralai": "^1.13.0",
     "@neondatabase/serverless": "^1.0.2",
     "@streamdown/cjk": "^1.0.1",
     "@streamdown/code": "^1.0.1",
@@ -24,6 +25,9 @@
     "@streamdown/mermaid": "^1.0.1",
     "@t3-oss/env-nextjs": "^0.13.10",
     "@tabler/icons-react": "^3.36.1",
+    "@upstash/realtime": "^1.0.2",
+    "@upstash/redis": "^1.36.2",
+    "@upstash/workflow": "^1.1.0",
     "ai": "^6.0.69",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
