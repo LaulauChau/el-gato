@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(fontMono.variable, "font-mono antialiased")}>
+      <body className={cn(fontMono.variable, "overflow-hidden font-mono antialiased")}>
         <Providers>
           <SidebarProvider>
             <AppSidebar />

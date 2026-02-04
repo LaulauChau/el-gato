@@ -27,6 +27,7 @@ async function ChatContent({ params }: { params: Promise<PageParams> }) {
     id: message.id,
     content: message.content,
     role: message.role,
+    createdAt: message.createdAt,
   }));
 
   return <ChatClient chatId={chatId} messages={formattedMessages} />;
@@ -34,10 +35,10 @@ async function ChatContent({ params }: { params: Promise<PageParams> }) {
 
 export default function ChatPage({ params }: { params: Promise<PageParams> }) {
   return (
-    <main className="flex min-h-0 flex-1 justify-center overflow-hidden">
+    <div className="flex min-h-0 flex-1 justify-center">
       <Suspense>
         <ChatContent params={params} />
       </Suspense>
-    </main>
+    </div>
   );
 }

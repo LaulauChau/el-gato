@@ -12,6 +12,7 @@ type MessageData = {
   id: string;
   content: string;
   role: "user" | "assistant";
+  createdAt?: Date | string;
 };
 
 type Props = {
@@ -52,7 +53,12 @@ export function ChatMessages({ messages, streamingMessage }: Props) {
     <Conversation className="relative min-h-0 flex-1">
       <ConversationContent>
         {allMessages.map((message) => (
-          <Message from={message.role} key={message.id}>
+          <Message
+            content={message.content}
+            createdAt={message.createdAt}
+            from={message.role}
+            key={message.id}
+          >
             <MessageContent>{message.content}</MessageContent>
           </Message>
         ))}

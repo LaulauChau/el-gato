@@ -4,7 +4,7 @@ import { cjk } from "@streamdown/cjk";
 import { code } from "@streamdown/code";
 import { math } from "@streamdown/math";
 import { mermaid } from "@streamdown/mermaid";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { IconCheck, IconChevronLeft, IconChevronRight, IconCopy } from "@tabler/icons-react";
 import type { UIMessage } from "ai";
 import type { ComponentProps, HTMLAttributes, ReactElement } from "react";
 import { createContext, memo, useContext, useEffect, useState } from "react";
@@ -17,9 +17,18 @@ import { cn } from "@/lib/utils";
 
 export type MessageProps = HTMLAttributes<HTMLDivElement> & {
   from: UIMessage["role"];
+  content: string;
+  createdAt?: Date | string;
 };
 
-export const Message = ({ className, from, ...props }: MessageProps) => (
+export const Message = ({
+  className,
+  content,
+  createdAt,
+  from,
+  children,
+  ...props
+}: MessageProps) => (
   <div
     className={cn(
       "group flex w-full max-w-[95%] flex-col gap-2",
@@ -27,7 +36,10 @@ export const Message = ({ className, from, ...props }: MessageProps) => (
       className,
     )}
     {...props}
-  />
+  >
+    {children}
+    <MessageMeta content={content} createdAt={createdAt} from={from} />
+  </div>
 );
 
 export type MessageContentProps = HTMLAttributes<HTMLDivElement>;
@@ -89,6 +101,54 @@ export const MessageAction = ({
 
   return button;
 };
+
+export type MessageMetaProps = {
+  content: string;
+  createdAt?: Date | string;
+  from: UIMessage["role"];
+};
+
+export function MessageMeta({ content, createdAt, from }: MessageMetaProps) {
+  const [copied, setCopied] = useState(false);
+
+  function formatTimestamp(date?: Date | string): string {
+    if (!date) {
+      return "";
+    }
+    return new Date(date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  }
+
+  function handleCopy() {
+    navigator.clipboard.writeText(content);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  const timestamp = formatTimestamp(createdAt);
+  const isVisibleAlways = from !== "user";
+  const alignRight = from === "user";
+
+  return (
+    <div
+      className={cn(
+        "mt-2 flex items-center gap-2 text-xs text-muted-foreground",
+        alignRight && "ml-auto flex-row-reverse",
+        !isVisibleAlways && "opacity-0 group-hover:opacity-100",
+      )}
+    >
+      {timestamp && <span>{timestamp}</span>}
+      <MessageAction
+        aria-label="Copy to clipboard"
+        label="Copy to clipboard"
+        onClick={handleCopy}
+        size="icon-xs"
+        tooltip="Copy to clipboard"
+      >
+        {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
+      </MessageAction>
+    </div>
+  );
+}
 
 interface MessageBranchContextType {
   currentBranch: number;
